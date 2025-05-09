@@ -1,36 +1,35 @@
 
 package com.huawei.classroom.student.h13;
 
-import java.io.Closeable;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * 在本包下增加合适的类和方法，使得Test类能够测试通过 
  * 
  * 不要引用jdk1.8以外第三方的包
  * 
- * @author cjy
+ * @author super
  *
  */
 public class Analysis {
-	private String[] chapters = null;
+	private final String[] chapters;
+	private final Set<Character> ignoreChar = new HashSet<>(Arrays.asList(' ', '\r', '\t'));
 
 	/**
 	 * @throws Exception
 	 * 
 	 */
 	public Analysis(String filename) throws Exception {
+		String text = readFromTxt(filename);
+		text = text.replaceAll("[\\pP‘’“”]", " ");
+		this.chapters = splitContentToChapter(text);
 	}
 
 	/**
 	 * 提示 ：将一个文本文件读取到一个字符串中返回
 	 * 
-	 * @param filename
-	 *            红楼梦文本文件的全路径名
+	 * @param filename 红楼梦文本文件的全路径名
 	 * @return 文本的内容
 	 */
 	private String readFromTxt(String filename) throws Exception {
@@ -57,8 +56,32 @@ public class Analysis {
 	 * @param n
 	 * @return
 	 */
-	public List<String> getTopNWords(  int n){
-		return null;
+	public List<String> getTopNWords(int n){
+		int i, j;
+		Map<String, Integer> map = new HashMap<>();
+		List<Map.Entry<String, Integer>> mapList;
+		List<String> ans = new ArrayList<>();
+		for (i = 1; i < this.chapters.length; i++){
+			String content = this.chapters[i];
+			for (j = 0; j < content.length() - 1; j++) {
+				String str = content.substring(j, j + 2);
+				if (ignoreChar.contains(str.charAt(0)) || ignoreChar.contains(str.charAt(1))) {
+					continue;
+				}
+				int count;
+				count = map.getOrDefault(str, 0);
+				map.put(str, count + 1);
+			}
+		}
+
+		mapList = new ArrayList<>(map.entrySet());
+		mapList.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+
+		for (i = 0; i < n; i++) {
+			ans.add(mapList.get(i).getKey());
+		}
+
+		return ans;
 	}
 	/**
 	 * 关闭输入输入流
@@ -96,7 +119,24 @@ public class Analysis {
 	 * @throws Exception
 	 */
 	public int[] getStringFrequent(String str) throws Exception {
-		return null;
+		int[] counts = new int[120];
+		if (this.chapters.length > 121) {
+			throw new Exception("拆分的章节数量不对");
+		}
+		int i, j;
+		int length = str.length();
+		for (i = 1; i < this.chapters.length; i++) {
+			int count = 0;
+			String content = this.chapters[i];
+			for (j = 0; j < content.length() + 1 - length; j++) {
+				String contentStr = content.substring(j, j + length);
+				if (str.equals(contentStr)) {
+					count++;
+				}
+				counts[i - 1] = count;
+			}
+		}
+		return counts;
 	}
 
 }

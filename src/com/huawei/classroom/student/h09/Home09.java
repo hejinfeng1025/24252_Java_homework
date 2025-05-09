@@ -1,5 +1,7 @@
 package com.huawei.classroom.student.h09;
 
+import java.util.*;
+
 /**
  * 把你作业的代码写到这个类里面
  * 不可以修改类的名字、包名、和固有的几个方法名以及方法的可见性
@@ -7,7 +9,7 @@ package com.huawei.classroom.student.h09;
  * 可以引用jdk的类
  * 不要引用jdk1.8以外第三方的包
  * 
- * @author cjy
+ * @author super
  *
  */
 public class Home09 {
@@ -22,8 +24,12 @@ public class Home09 {
 	 * @return
 	 */
 	public int getDistinctCharCount(String s) {
-		 
-		return 0;
+		Set<Character> set = new HashSet<>();
+		char[] chars = s.toCharArray();
+		for (char cha : chars) {
+			set.add(cha);
+		}
+		return set.size();
 	}
 	/**
 	 * 返回一段文字中，出现频率最高的字符（不考虑并列第一的情况） 例如：getFrequentChar("好好学习") 返回'好'
@@ -34,8 +40,33 @@ public class Home09 {
 	 * @return
 	 */
 	public char getFrequentChar(String s) {
-		 
-		return ' ';
+		int i, max;
+		char ans = 0;
+		Map<Character, Integer> map = new HashMap<>();
+		for (i = 0; i < s.length(); i++) {
+			char cha = s.charAt(i);
+			if (!map.containsKey(cha)) {
+				map.put(cha, 1);
+			} else {
+				map.put(cha, map.get(cha) + 1);
+			}
+		}
+		max = 0;
+		Set<Character> characterSet = map.keySet();
+		for (Character cha: characterSet) {
+//			max = max > map.get(cha) ? max : map.get(cha);
+			if (max < map.get(cha)) {
+				max = map.get(cha);
+				ans = cha;
+			}
+		}
+//		Set<Map.Entry<Character, Integer>> entries = map.entrySet();
+//		for (Map.Entry<Character, Integer> entry : entries) {
+//			if (entry.getValue().equals(max)) {
+//				return entry.getKey();
+//			}
+//		}
+		return ans;
 	}
 	
 
@@ -49,10 +80,36 @@ public class Home09 {
 	 * @return
 	 */
 	public String getFrequentWord(String content){
-		return null;
+		int i, max;
+		String ans = null;
+		Map<String, Integer> map = new HashMap<>();
+		for (i = 0; i < content.length() - 1; i++) {
+			String str = content.substring(i, i + 2);
+			if (!map.containsKey(str)) {
+				map.put(str, 1);
+			} else {
+				map.put(str, map.get(str) + 1);
+			}
+		}
+		max = 0;
+		Set<String> stringSet = map.keySet();
+		for (String str: stringSet) {
+//			max = max > map.get(str) ? max : map.get(str);
+			if (max < map.get(str)) {
+				max = map.get(str);
+				ans = str;
+			}
+		}
+//		Set<Map.Entry<String, Integer>> entries = map.entrySet();
+//		for (Map.Entry<String, Integer> entry : entries) {
+//			if (entry.getValue().equals(max)) {
+//				return entry.getKey();
+//			}
+//		}
+		return ans;
 	}
-	 
-	 
+
+
 	
 	/**
 	 * 把一个StringBufer中所有的空格去掉
@@ -61,7 +118,12 @@ public class Home09 {
 	 * @param buf
 	 */
 	public void zipStringBufer(StringBuffer buf) {
-		 
+		int i;
+		for (i = 0; i < buf.length(); i++) {
+			if (buf.charAt(i) == ' ') {
+				buf.deleteCharAt(i--);
+			}
+		}
 	}
 
  

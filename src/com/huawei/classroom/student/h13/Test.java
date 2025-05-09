@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * 实验一
  *
+ * @author super
  */
 public class Test {
 
@@ -37,9 +38,12 @@ public class Test {
 
 		try {
 			// 测试的时候，红楼梦文件名，这个文件名不固定，测试的时候可能在别的位置
-			String filename = "D:\\test\\java\\com\\huawei\\classroom\\student\\h13\\red.txt";
+			String filename = "/Users/super/IdeaProjects/OOP_homeworks/src/com/huawei/classroom/student/h13/red.txt";
 			//使用文件名初始化Analysis类
+			long l=System.currentTimeMillis();
 			Analysis  analysis = new Analysis (filename);
+			long cost=(System.currentTimeMillis()-l);
+			// System.out.println("Analysis 耗时 "+cost +" ms");
 			// 要统计的汉字，测试的时候不固定，可能统计任意的汉字
 			// 通过统计 "之" 在每回中出现的频率，你是否能感觉到前80章 和后40章的写作风格不同
 			// 再看看 从多少回开始，贾府中的笑声开始减少了 

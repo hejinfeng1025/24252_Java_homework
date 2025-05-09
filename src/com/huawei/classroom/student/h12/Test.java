@@ -14,7 +14,8 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String content = "a,b,c,d,e,f;a,e,b,c,g,k;s,w,q,a,c,b;z,l,m,a";
+		int testCount = 2;
+		String content= "a,b,c,d,e,f;a,e,b,c,g,d,k;s,w,e,d,q,a,c,b;z,l,m,a";
  		Home12 h=new Home12();
 		/**
 		 * 
@@ -22,16 +23,48 @@ public class Test {
 		 * 请找出   哪n(n>=1)个商品被同时购买的频率最高，将这n个商品名称的集合（set)返回 
 		 * 测试的时候，购物次数<100,每次购买的商品数量<10,1<=n<=10
 		 */
-		Set<String> result=h.getFrequentItem(content,3);
-		Set<String> right=new HashSet<String>();
+		Set<String> result;
+		Set<String> right = new HashSet<String>();
+		// n=1
+		result = h.getFrequentItem(content, 1);
 		right.add("a");
-		right.add("b");
-		right.add("c");
-		System.out.println(result);
-		if(result.equals(right)) {
-			System.out.println("做对了");
-		}else {
+		if (result.equals(right)) {
+			System.out.println("做对了1");
+		} else {
 			System.out.println(result);
 		}
+		// n=2
+		result = h.getFrequentItem(content, 2);
+		right.add("b");
+		if (result.equals(right)) {
+			System.out.println("做对了2");
+		} else {
+			System.out.println(result);
+		}
+		// n=3
+		result = h.getFrequentItem(content, 3);
+		right.add("c");
+		if (result.equals(right)) {
+			System.out.println("做对了3");
+		} else {
+			System.out.println(result);
+		}
+		// n=4
+		result = h.getFrequentItem(content, 4);
+		right.add("d");
+		if (result.equals(right)) {
+			System.out.println("做对了4");
+		} else {
+			System.out.println(result);
+		}
+		// n=5
+		result = h.getFrequentItem(content, 5);
+		right.add("e");
+		if (result.equals(right)) {
+			System.out.println("做对了5");
+		} else {
+			System.out.println(result);
+		}
+
 	}
 }
