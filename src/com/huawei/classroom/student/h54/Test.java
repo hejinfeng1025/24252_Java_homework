@@ -7,10 +7,10 @@ package com.huawei.classroom.student.h54;
  */
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		FileTool home = new FileTool();
-		String homeDir = "xxxx/test_dir1/";
+		String homeDir = "D:\\Programming\\IDEA\\24252_Java_homework\\src\\com\\huawei\\classroom\\student\\h54\\test_dir";
 		// 将一根目录下所有文本文件内容做替换，具体要求见 replaceTxtFileContent 方法
 		// 此题目要求精确匹配答案
 		home.replaceTxtFileContent(homeDir, "南开大学", "天津大学");
