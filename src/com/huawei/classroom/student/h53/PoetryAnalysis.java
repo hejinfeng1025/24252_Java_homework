@@ -18,7 +18,7 @@ public class PoetryAnalysis {
 	//charSet是需要统计的汉字集合（用半角分号分割的字符串转换而来）
 	private Set<String> charSet = new HashSet<>();
 
-	public void analysis(String pathFilename,String chars) throws Exception {
+	public void analysis(String pathFilename,String chars) {
 		//读入文件
 		String content = readFromTxt(pathFilename);
 		String[] strings = chars.split(";");
@@ -56,7 +56,8 @@ public class PoetryAnalysis {
 		mapList = new ArrayList<>(map.entrySet());
 		mapList.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
-		for(int k = 0;k<n;k++){
+		int limit = Math.min(n, mapList.size());
+		for(int k = 0; k < limit; k++){
 			ans.add(mapList.get(k));
 		}
 		return ans;
@@ -73,10 +74,10 @@ public class PoetryAnalysis {
 		}
 	}
 	//从文件中读取文本内容
-	private String readFromTxt(String filename) throws Exception {
+	private String readFromTxt(String filename){
 		Reader reader = null;
+		StringBuffer buf = new StringBuffer();
 		try {
-			StringBuffer buf = new StringBuffer();
 			char[] chars = new char[1024];
 			// InputStream in=new FileInputStream(filename);
 
@@ -86,10 +87,13 @@ public class PoetryAnalysis {
 				buf.append(chars, 0, readed);
 				readed = reader.read(chars);
 			}
-			return buf.toString();
-		} finally {
+
+		} catch (Exception e) {
+			e.printStackTrace();}
+		finally {
 			close(reader);
 		}
+		return buf.toString();
 	}
 
 

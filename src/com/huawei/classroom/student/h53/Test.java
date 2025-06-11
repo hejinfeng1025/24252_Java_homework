@@ -7,7 +7,7 @@ package com.huawei.classroom.student.h53;
  */
 public class Test {
 
-	public static void main(String[] argv) throws Exception {
+	public static void main(String[] argv) {
 		// TODO Auto-generated constructor stub
 		/**
 		 * 用计算机来证明  为什么说李白是浪漫主义诗人 杜甫是现实主义诗人 

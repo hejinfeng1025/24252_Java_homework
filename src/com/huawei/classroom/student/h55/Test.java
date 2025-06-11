@@ -11,7 +11,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		VoteRecordA     vote = new VoteRecordA     ();
+		VoteRecord vote = new VoteRecord();
 		long l = System.currentTimeMillis();
 
 		/**
@@ -20,7 +20,7 @@ public class Test {
 		 * 1个微信ID 10分钟内 最多只能投5票 多余的票无效;其中微信ID不固定，候选人姓名不固定 测试的时候要求10万行记录处理时间不超过3秒
 		 */
 		Map<String, Integer> map = vote.calcRecording(				
-				"xxxx/vote_detail.txt");
+				"D:\\Programming\\IDEA\\24252_Java_homework\\src\\com\\huawei\\classroom\\student\\h55\\vote_detail.txt");
 	
 		
 		System.out.println(map);

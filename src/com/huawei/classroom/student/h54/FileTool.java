@@ -21,13 +21,18 @@ public class FileTool {
 	 * @param targetStr
 	 */
 
-	public void replaceTxtFileContent(String homeDir,String orgStr,String targetStr) throws Exception {
+	public void replaceTxtFileContent(String homeDir,String orgStr,String targetStr) {
 		this.orgStr = orgStr;
 		this.targetStr = targetStr;
 		//对于目录和文件，都用File来封装
 		File directory = new File(homeDir);
 		//递归检查文件夹
-		replaceFilesRecursively(directory);
+		try {
+			replaceFilesRecursively(directory);
+		} catch (Exception e) {
+			// 捕获异常，防止抛出到外层
+			// 可以选择打印日志，也可以忽略
+		}
 
 	}
 	/*

@@ -7,7 +7,7 @@ package com.huawei.classroom.student.h54;
  */
 public class Test {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		FileTool home = new FileTool();
 		String homeDir = "D:\\Programming\\IDEA\\24252_Java_homework\\src\\com\\huawei\\classroom\\student\\h54\\test_dir";
