@@ -6,44 +6,45 @@ import java.util.*;
 
 public class PoetryAnalysis {
 
-	/**
-	 * 
-	 * @param pathFilename 包含诗歌内容的源文件
-	 * @param chars 需要统计的字 以半角分号分割 
-	 * 统计  
-	 * 
-	 */
-	//verses是诗句数组,用逗号和句号分割
 	private String[] verses = new String[0];
-	//charSet是需要统计的汉字集合（用半角分号分割的字符串转换而来）
 	private Set<String> charSet = new HashSet<>();
 
+
 	public void analysis(String pathFilename,String chars) {
-		//读入文件
 		String content = readFromTxt(pathFilename);
+		// 将输入的汉字字符串按分号分割成数组
 		String[] strings = chars.split(";");
 		List<Map.Entry<String, Integer>> result = new ArrayList<>();
-
 		charSet = new HashSet<>(Arrays.asList(strings));
+		// 按逗号和句号分割诗句
 		verses = content.split("[，。]");
 
+		// 获取出现频率最高的10个词
 		result = getTopNWords(10);
+		// 输出结果
 		for(Map.Entry<String, Integer> res : result) {
 			System.out.println(res.getKey() + "\t" + res.getValue());
 		}
 	}
 
-	//获取verses所有加起来中出现频率最高的n个词
+	/**
+	 * 获取所有诗句中出现频率最高的n个词（两个相邻汉字组成的词）
+	 * 仅统计包含指定汉字集合中至少一个汉字的词
+	 * @param n 需要返回的高频词数量
+	 * @return 高频词及其出现次数的列表
+	 */
 	public List<Map.Entry<String, Integer>> getTopNWords(int n){
 		int i, j;
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>(); // 词频统计map
 		List<Map.Entry<String, Integer>> mapList;
 		List<Map.Entry<String, Integer>> ans = new ArrayList<>();
 
+		// 遍历每一句诗
 		for(i=0;i< this.verses.length;i++){//双层循环，遍历每一句
 			String content = this.verses[i];
-			for(j=0;j< content.length()-1;j++){//遍历每一句中的每个词（两个相邻汉字）
+			for(j=0;j< content.length()-1;j++){// 遍历每一句中的每个词（两个相邻汉字）
 				String str = content.substring(j, j+2);
+				// 仅统计包含指定汉字集合中至少一个汉字的词
 				if(!charSet.contains(str.substring(0, 1)) && !charSet.contains(str.substring(1,2))) {
 					continue;
 				}
@@ -53,41 +54,41 @@ public class PoetryAnalysis {
 			}
 		}
 
+		// 将map转为列表并按出现次数降序排序
 		mapList = new ArrayList<>(map.entrySet());
 		mapList.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
+		// 只取前n个高频词
 		int limit = Math.min(n, mapList.size());
 		for(int k = 0; k < limit; k++){
 			ans.add(mapList.get(k));
 		}
 		return ans;
 	}
-	//关闭输入输出流
+
 	private void close(Closeable inout) {
 		if (inout != null) {
 			try {
 				inout.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				// 关闭流时发生异常
 				e.printStackTrace();
 			}
 		}
 	}
-	//从文件中读取文本内容
+
 	private String readFromTxt(String filename){
 		Reader reader = null;
 		StringBuffer buf = new StringBuffer();
 		try {
 			char[] chars = new char[1024];
-			// InputStream in=new FileInputStream(filename);
-
+			// 使用UTF-8编码读取文件
 			reader = new InputStreamReader(new FileInputStream(filename), "UTF-8");
 			int readed = reader.read(chars);
 			while (readed != -1) {
 				buf.append(chars, 0, readed);
 				readed = reader.read(chars);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();}
 		finally {
@@ -95,6 +96,5 @@ public class PoetryAnalysis {
 		}
 		return buf.toString();
 	}
-
 
 }
